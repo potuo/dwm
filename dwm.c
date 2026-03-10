@@ -293,7 +293,7 @@ static void resizerequest(XEvent *e);
 static void restack(Monitor *m);
 
 static void run(void);
-/*static void runAutostart(void);*/
+static void runAutostart(void);
 static void scan(void);
 static int sendevent(Window w, Atom proto, int m, long d0, long d1, long d2, long d3, long d4);
 static void sendmon(Client *c, Monitor *m);
@@ -2341,12 +2341,12 @@ run(void)
             handler[ev.type](&ev); /* call handler */
 }
 
-/*void
+void
 runAutostart(void) {
     char cmd [100];
     sprintf(cmd, "%s &", autostartscript);
     system(cmd);
-}*/
+}
 
 void
 scan(void)
@@ -3956,7 +3956,7 @@ main(int argc, char *argv[])
         die("pledge");
 #endif /* __OpenBSD__ */
     scan();
-    /*runAutostart();*/
+    runAutostart();
     restoreSession();
     run();
     if(restart) execvp(argv[0], argv);
