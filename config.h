@@ -178,8 +178,8 @@ static Key keys[] = {
     { MODKEY|ControlMask|ShiftMask,    XK_q,            quit,             {0} },                     /* super shift r    |  退出dwm */
     { MODKEY|ShiftMask,    XK_r,  quit,             {1} },                     /* super shift r    |  退出dwm */
 
-	{ MODKEY|ShiftMask,    XK_space,        selectlayout,     {.v = &layouts[1]} },      /* super shift space  |  切换到网格布局 */
-	{ MODKEY,              XK_o,            showonlyorall,    {0} },                     /* super o            |  切换 只显示一个窗口 / 全部显示 */
+	  { MODKEY|ShiftMask,    XK_space,        selectlayout,     {.v = &layouts[1]} },      /* super shift space  |  切换到网格布局 */
+	  { MODKEY,              XK_o,            showonlyorall,    {0} },                     /* super o            |  切换 只显示一个窗口 / 全部显示 */
 
     { MODKEY|ControlMask,  XK_equal,        setgap,           {.i = -6} },               /* super ctrl +       |  窗口增大 */
     { MODKEY|ControlMask,  XK_minus,        setgap,           {.i = +6} },               /* super ctrl -       |  窗口减小 */
@@ -221,7 +221,8 @@ static Key keys[] = {
     { 0, XF86XK_MonBrightnessDown,    spawn, SHCMD("$DWM/statusbar/packages/set_light.sh down") },                  /* XF86XK_MonBrightnessDown   | 亮度-                 */
     { MODKEY,              XK_a,      spawn, SHCMD("flameshot gui -c -p ~/Pictures/screenshots") },             /* super a    | 截图                   */
     { MODKEY|ShiftMask,    XK_q,      spawn, SHCMD("kill -9 $(xprop | grep _NET_WM_PID | awk '{print $3}')") }, /* super shift q    | 选中某个窗口并强制kill */
-
+    
+    {MODKEY,               XK_c,      centerWindow,           {0} },                                            /* super c          | 居中并使窗口浮动 */
     /* super key : 跳转到对应tag (可附加一条命令 若目标目录无窗口，则执行该命令) */
     /* super shift key : 将聚焦窗口移动到对应tag */
     /* key tag cmd */

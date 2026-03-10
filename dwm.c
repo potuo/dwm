@@ -363,6 +363,9 @@ static void focuspreviewwin(Client *focus_c, Monitor *m);
 static XImage *getwindowximage(Client *c);
 static XImage *scaledownimage(Client *c, unsigned int cw, unsigned int ch);
 
+
+static void centerWindow(const Arg *arg);
+
 /* variables */
 static Systray *systray =  NULL;
 static const char broken[] = "broken";
@@ -408,6 +411,9 @@ static Window root, wmcheckwin;
 
 static int hiddenWinStackTop = -1;
 static Client *hiddenWinStack[100];
+
+
+
 
 /* configuration, allows nested code to access above variables */
 #include "config.h"
@@ -4220,6 +4226,39 @@ void exchange_two_client(Client *c1, Client *c2) {
     arrange(c1->mon);
     pointerclient(c1);
 }
+
+void
+centerWindow(const Arg *arg) {
+    Client *c = selmon->sel;
+    if (!c)
+        return;
+
+    int mw = c->mon->mw;  // 当前屏幕宽
+    int mh = c->mon->mh;  // 当前屏幕高
+    int mx = c->mon->mx;  // 当前屏幕起始x
+    int my = c->mon->my;  // 当前屏幕起始y
+
+    int nw, nh, nx, ny;
+
+    if (!c->isfloating) {
+        // 平铺窗口 → 先浮动 + 缩小到屏幕75%
+        c->isfloating = 1;
+
+        nw = mw * 0.75;
+        nh = mh * 0.75;
+    } else {
+        // 浮动窗口 → 保持原大小
+        nw = c->w;
+        nh = c->h;
+    }
+
+    // 居中计算
+    nx = mx + (mw - nw) / 2;
+    ny = my + (mh - nh) / 2;
+
+    resizeclient(c, nx, ny, nw, nh);
+}
+
 
 void exchange_client(const Arg *arg) {
   Client *c = selmon->sel;
