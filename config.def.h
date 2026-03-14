@@ -1,4 +1,5 @@
 #include <X11/XF86keysym.h>
+#define SESSION_FILE "/tmp/dwm-session"
 
 static int showsystray                   = 1;         /* 是否显示托盘栏 */
 static const int newclientathead         = 0;         /* 定义新窗口在栈顶还是栈底 */
@@ -56,7 +57,7 @@ static const unsigned int alphas[][3]    = {          /* 透明度设置 ColFg, 
 };
 
 /* 自定义脚本位置 */
-/* static const char *autostartscript = "$DWM/autostart.sh"; */
+static const char *autostartscript = "$DWM/autostart.sh";
 static const char *statusbarscript = "$DWM/statusbar/statusbar.sh";
 
 /* 自定义 scratchpad instance */
@@ -159,7 +160,7 @@ static Key keys[] = {
     { MODKEY,              XK_i,            hidewin,          {0} },                     /* super i            |  隐藏 窗口 */
     { MODKEY|ShiftMask,    XK_i,            restorewin,       {0} },                     /* super shift i      |  取消隐藏 窗口 */
 
-    { MODKEY|ShiftMask,    XK_Return,       zoom,             {0} },                     /* super shift enter  |  将当前聚焦窗口置为主窗口 */
+    /*{ MODKEY|ShiftMask,    XK_Return,       zoom,             {0} },*/                     /* super shift enter  |  将当前聚焦窗口置为主窗口 */
 
     { MODKEY,              XK_t,            togglefloating,   {0} },                     /* super t            |  开启/关闭 聚焦目标的float模式 */
     { MODKEY|ShiftMask,    XK_t,            toggleallfloating,{0} },                     /* super shift t      |  开启/关闭 全部目标的float模式 */
@@ -174,14 +175,14 @@ static Key keys[] = {
 
     { MODKEY,              XK_q,            killclient,       {0} },                     /* super q            |  关闭窗口 */
     { MODKEY|ControlMask,  XK_q,            forcekillclient,  {0} },                     /* super ctrl q       |  强制关闭窗口(处理某些情况下无法销毁的窗口) */
-    { MODKEY|ShiftMask,    XK_r,            quit,             {0} },                     /* super shift r    |  退出dwm */
-    { MODKEY|ControlMask|ShiftMask,  XK_r,  quit,             {1} },                     /* super shift r    |  退出dwm */
+    { MODKEY|ControlMask|ShiftMask,    XK_q,            quit,             {0} },                     /* super shift r    |  退出dwm */
+    { MODKEY|ShiftMask,    XK_r,  quit,             {1} },                     /* super shift r    |  退出dwm */
 
-	{ MODKEY|ShiftMask,    XK_space,        selectlayout,     {.v = &layouts[1]} },      /* super shift space  |  切换到网格布局 */
-	{ MODKEY,              XK_o,            showonlyorall,    {0} },                     /* super o            |  切换 只显示一个窗口 / 全部显示 */
+	  { MODKEY|ShiftMask,    XK_space,        selectlayout,     {.v = &layouts[1]} },      /* super shift space  |  切换到网格布局 */
+	  { MODKEY,              XK_o,            showonlyorall,    {0} },                     /* super o            |  切换 只显示一个窗口 / 全部显示 */
 
-    { MODKEY|ControlMask,  XK_equal,        setgap,           {.i = -6} },               /* super ctrl +       |  窗口增大 */
-    { MODKEY|ControlMask,  XK_minus,        setgap,           {.i = +6} },               /* super ctrl -       |  窗口减小 */
+    { MODKEY|ControlMask,  XK_equal,        setgap,           {.i = -3} },               /* super ctrl +       |  窗口增大 */
+    { MODKEY|ControlMask,  XK_minus,        setgap,           {.i = +3} },               /* super ctrl -       |  窗口减小 */
     { MODKEY|ControlMask,  XK_space,        setgap,           {.i = 0} },                /* super ctrl space   |  窗口重置 */
 
     { MODKEY|ControlMask,  XK_Up,           movewin,          {.ui = UP} },              /* super ctrl up      |  移动窗口 */
@@ -209,18 +210,19 @@ static Key keys[] = {
     { MODKEY,              XK_minus,  spawn, SHCMD("st -c FG") },                                               /* super +          | 打开全局st终端         */
     { MODKEY|ShiftMask,    XK_Return, spawn, SHCMD("st -c float") },                                            /* super shift return      | 打开浮动st终端         */
     { MODKEY,              XK_F1,     spawn, SHCMD("killall pcmanfm || pcmanfm") },                             /* super F1         | 打开/关闭pcmanfm       */
-    { MODKEY,              XK_space,  spawn, SHCMD("rofi -show drun -show-icons") },                                         /* super space          | rofi: 执行run          */
-    { MODKEY,              XK_p,      spawn, SHCMD("$DWM/DEF/rofi.sh") },                                       /* super p          | rofi: 执行自定义脚本   */
-    { 0, XF86XK_Launch1,              spawn, SHCMD("$DWM/DEF/blurlock.sh") },                                   /* super n          | 锁定屏幕               */
-    { 0, XF86XK_AudioRaiseVolume,     spawn, SHCMD("$DWM/statusbar/packages/set_vol.sh up") },                                 /* XF86XK_AudioLowerVolume    | 音量+                 */
-    { 0, XF86XK_AudioLowerVolume,     spawn, SHCMD("$DWM/statusbar/packages/set_vol.sh down") },                               /* XF86XK_AudioLowerVolume    | 音量-                 */
-    { 0, XF86XK_AudioMute,            spawn, SHCMD("$DWM/statusbar/packages/set_vol.sh mute") },                               /* XF86XK_AudioLowerVolume    | 音量-                 */
-    { 0, XF86XK_AudioMicMute,         spawn, SHCMD("$DWM/statusbar/packages/set_vol.sh mic") },                               /* XF86XK_AudioLowerVolume    | 音量-                 */
-    { 0, XF86XK_MonBrightnessUp,      spawn, SHCMD("$DWM/statusbar/packages/set_light.sh up") },                    /* XF86XK_MonBrightnessUp     | 亮度+                 */
-    { 0, XF86XK_MonBrightnessDown,    spawn, SHCMD("$DWM/statusbar/packages/set_light.sh down") },                  /* XF86XK_MonBrightnessDown   | 亮度-                 */
+    { MODKEY,              XK_space,  spawn, SHCMD("rofi -theme $DWM/scripts/config/rofi.rasi -show drun -show-icons") },                                         /* super space          | rofi: 执行run          */
+    { MODKEY,              XK_p,      spawn, SHCMD("$DWM/scripts/rofi.sh") },                                       /* super p          | rofi: 执行自定义脚本   */
+    { 0, XF86XK_Launch1,              spawn, SHCMD("$DWM/scripts/blurlock.sh") },                                   /* super n          | 锁定屏幕               */
+    { 0, XF86XK_AudioRaiseVolume,     spawn, SHCMD("$DWM/scripts/set_vol.sh up") },                                 /* XF86XK_AudioLowerVolume    | 音量+                 */
+    { 0, XF86XK_AudioLowerVolume,     spawn, SHCMD("$DWM/scripts/set_vol.sh down") },                               /* XF86XK_AudioLowerVolume    | 音量-                 */
+    { 0, XF86XK_AudioMute,            spawn, SHCMD("$DWM/scripts/set_vol.sh mute") },                               /* XF86XK_AudioLowerVolume    | 音量-                 */
+    { 0, XF86XK_AudioMicMute,         spawn, SHCMD("$DWM/scripts/set_vol.sh mic") },                               /* XF86XK_AudioLowerVolume    | 音量-                 */
+    { 0, XF86XK_MonBrightnessUp,      spawn, SHCMD("$DWM/scripts/set_light.sh up") },                    /* XF86XK_MonBrightnessUp     | 亮度+                 */
+    { 0, XF86XK_MonBrightnessDown,    spawn, SHCMD("$DWM/scripts/set_light.sh down") },                  /* XF86XK_MonBrightnessDown   | 亮度-                 */
     { MODKEY,              XK_a,      spawn, SHCMD("flameshot gui -c -p ~/Pictures/screenshots") },             /* super a    | 截图                   */
     { MODKEY|ShiftMask,    XK_q,      spawn, SHCMD("kill -9 $(xprop | grep _NET_WM_PID | awk '{print $3}')") }, /* super shift q    | 选中某个窗口并强制kill */
-
+    
+    {MODKEY,               XK_c,      centerWindow,           {0} },                                            /* super c          | 居中并使窗口浮动 */
     /* super key : 跳转到对应tag (可附加一条命令 若目标目录无窗口，则执行该命令) */
     /* super shift key : 将聚焦窗口移动到对应tag */
     /* key tag cmd */

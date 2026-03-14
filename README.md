@@ -1,6 +1,27 @@
 # DWM YES  
-
+------
 fork自[yaocccc/dwm](https://github.com/yaocccc/dwm/)
+
+- 以下是我做出的符合我日常使用的改动以及部分更新
+- 添加了restartsig，Restore after restart补丁，无需使用while循环即可直接重载dwm（快捷键 super+shift+r）
+- 添加了浮动窗口居中（快捷键 super+c，浮动窗口居中，如平铺窗口则转化为浮动后居中）
+- 重定向了部分配置的目录，去掉了 DEF/  文件夹，clone下来后无需  cp -rf DEF/* .  即可直接使用
+- 修改添加删除了部分脚本，把日常使用的脚本放入仓库内，无需手动下载脚本仓库使用
+```plaintext
+  食用方式：
+  git clone https://github.com/potuo/dwm --depth 1  ~/.config/dwm
+  在home目录下的 .xinitrc 文件底部插入
+  export DWM=~/.config/dwm
+  exec dwm
+  
+  每次修改源代码后都需要执行（super+shift+r 重载dwm）
+  sudo make clean install
+```
+
+分割线下面内容均为yaocccc/dwm原内容 无改动
+
+
+------
 
 dwm 是一个非常快速, 小巧并使用动态管理窗口的窗口管理器
 

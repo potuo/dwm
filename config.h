@@ -210,15 +210,15 @@ static Key keys[] = {
     { MODKEY,              XK_minus,  spawn, SHCMD("st -c FG") },                                               /* super +          | 打开全局st终端         */
     { MODKEY|ShiftMask,    XK_Return, spawn, SHCMD("st -c float") },                                            /* super shift return      | 打开浮动st终端         */
     { MODKEY,              XK_F1,     spawn, SHCMD("killall pcmanfm || pcmanfm") },                             /* super F1         | 打开/关闭pcmanfm       */
-    { MODKEY,              XK_space,  spawn, SHCMD("rofi -show drun -show-icons") },                                         /* super space          | rofi: 执行run          */
-    { MODKEY,              XK_p,      spawn, SHCMD("$DWM/DEF/rofi.sh") },                                       /* super p          | rofi: 执行自定义脚本   */
-    { 0, XF86XK_Launch1,              spawn, SHCMD("$DWM/DEF/blurlock.sh") },                                   /* super n          | 锁定屏幕               */
-    { 0, XF86XK_AudioRaiseVolume,     spawn, SHCMD("$DWM/statusbar/packages/set_vol.sh up") },                                 /* XF86XK_AudioLowerVolume    | 音量+                 */
-    { 0, XF86XK_AudioLowerVolume,     spawn, SHCMD("$DWM/statusbar/packages/set_vol.sh down") },                               /* XF86XK_AudioLowerVolume    | 音量-                 */
-    { 0, XF86XK_AudioMute,            spawn, SHCMD("$DWM/statusbar/packages/set_vol.sh mute") },                               /* XF86XK_AudioLowerVolume    | 音量-                 */
-    { 0, XF86XK_AudioMicMute,         spawn, SHCMD("$DWM/statusbar/packages/set_vol.sh mic") },                               /* XF86XK_AudioLowerVolume    | 音量-                 */
-    { 0, XF86XK_MonBrightnessUp,      spawn, SHCMD("$DWM/statusbar/packages/set_light.sh up") },                    /* XF86XK_MonBrightnessUp     | 亮度+                 */
-    { 0, XF86XK_MonBrightnessDown,    spawn, SHCMD("$DWM/statusbar/packages/set_light.sh down") },                  /* XF86XK_MonBrightnessDown   | 亮度-                 */
+    { MODKEY,              XK_space,  spawn, SHCMD("rofi -theme $DWM/scripts/config/rofi.rasi -show drun -show-icons") },                                         /* super space          | rofi: 执行run          */
+    { MODKEY,              XK_p,      spawn, SHCMD("$DWM/scripts/rofi.sh") },                                       /* super p          | rofi: 执行自定义脚本   */
+    { 0, XF86XK_Launch1,              spawn, SHCMD("$DWM/scripts/blurlock.sh") },                                   /* super n          | 锁定屏幕               */
+    { 0, XF86XK_AudioRaiseVolume,     spawn, SHCMD("$DWM/scripts/set_vol.sh up") },                                 /* XF86XK_AudioLowerVolume    | 音量+                 */
+    { 0, XF86XK_AudioLowerVolume,     spawn, SHCMD("$DWM/scripts/set_vol.sh down") },                               /* XF86XK_AudioLowerVolume    | 音量-                 */
+    { 0, XF86XK_AudioMute,            spawn, SHCMD("$DWM/scripts/set_vol.sh mute") },                               /* XF86XK_AudioLowerVolume    | 音量-                 */
+    { 0, XF86XK_AudioMicMute,         spawn, SHCMD("$DWM/scripts/set_vol.sh mic") },                               /* XF86XK_AudioLowerVolume    | 音量-                 */
+    { 0, XF86XK_MonBrightnessUp,      spawn, SHCMD("$DWM/scripts/set_light.sh up") },                    /* XF86XK_MonBrightnessUp     | 亮度+                 */
+    { 0, XF86XK_MonBrightnessDown,    spawn, SHCMD("$DWM/scripts/set_light.sh down") },                  /* XF86XK_MonBrightnessDown   | 亮度-                 */
     { MODKEY,              XK_a,      spawn, SHCMD("flameshot gui -c -p ~/Pictures/screenshots") },             /* super a    | 截图                   */
     { MODKEY|ShiftMask,    XK_q,      spawn, SHCMD("kill -9 $(xprop | grep _NET_WM_PID | awk '{print $3}')") }, /* super shift q    | 选中某个窗口并强制kill */
     
