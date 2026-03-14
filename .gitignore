@@ -3,4 +3,4 @@ dwm
 *.rej
 *.orig
 config.def.h
-temp
+statusbar/temp
