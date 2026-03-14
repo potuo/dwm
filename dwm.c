@@ -3962,7 +3962,7 @@ main(int argc, char *argv[])
         die("pledge");
 #endif /* __OpenBSD__ */
     scan();
-    runAutostart();
+    if(!getenv("DWM_AUTOSTART_DONE")){runAutostart();setenv("DWM_AUTOSTART_DONE","1",1);};
     restoreSession();
     run();
     if(restart) execvp(argv[0], argv);
