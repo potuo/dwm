@@ -9,7 +9,7 @@ fork自[yaocccc/dwm](https://github.com/yaocccc/dwm/)
 - 修改添加删除了部分脚本，把日常使用的脚本放入仓库内，无需手动下载脚本仓库使用
 
 - 预览图：
-- <img src="https://github.com/potuo/dwm/blob/main/images/main.png">
+- <img src="https://github.com/potuo/dwm/blob/master/images/main.png">
 
 
 
